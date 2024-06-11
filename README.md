@@ -21,7 +21,7 @@ The performance are reported on 10 scenes of the KAIST dataset. The test size of
 
 ## Qualitative Results
 
-![qualitative results](https://github.com/chenx2000/DWMT-main/figures/qualitative results.jpg)
+![qualitative results](./figures/qualitative results.jpg)
 
 # Usage
 ## Prepare Dataset
