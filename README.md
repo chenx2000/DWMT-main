@@ -21,7 +21,7 @@ The performance are reported on 10 scenes of the KAIST dataset. The test size of
 
 ## Qualitative Results
 
-![qualitative results](figures/qualitative results.jpg)
+![qualitative results](.figures/qualitative%20results.jpg)
 Download results of DWMT ([Google Drive](https://drive.google.com/drive/folders/1VGJCr6rOJkxt8GK0cpaSV_kCv7YU0QTU?usp=sharing)).
 
 # Usage
