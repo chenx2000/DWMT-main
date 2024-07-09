@@ -243,22 +243,7 @@ def gen_log(model_path):
     return logger
 
 
-def checkpoint(model, epoch, optimizer, scheduler, model_path, logger):
+def checkpoint(model, epoch, model_path, logger):
     model_out_path = model_path + "/model_epoch_{}.pth".format(epoch)
-    torch.save({
-        'epoch': epoch,
-        'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
-        'scheduler_state_dict': scheduler.state_dict(),
-    }, model_out_path)
+    torch.save(model.state_dict(), model_out_path)
     logger.info("Checkpoint saved to {}".format(model_out_path))
-
-
-# Load checkpoint
-def load_checkpoint(filepath, model, optimizer, scheduler):
-    checkpoint = torch.load(filepath)
-    model.load_state_dict(checkpoint['model_state_dict'])
-    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-    scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
-    epoch = checkpoint['epoch']
-    return epoch
