@@ -99,7 +99,11 @@ def main():
         "Learning rate:{}, batch_size:{}., method:{}, gpu_id:{}\n".format(opt.learning_rate, opt.batch_size, opt.method,
                                                                           opt.gpu_id))
     psnr_max = 0
-    for epoch in range(1, opt.max_epoch + 1):
+    if opt.pretrained_model_path is not None:
+        start_epoch = load_checkpoint(opt.pretrained_model_path, model, optimizer, scheduler)
+    else:
+        start_epoch = 1
+    for epoch in range(start_epoch, opt.max_epoch + 1):
         train(epoch, logger)
         (pred, truth, psnr_all, ssim_all, psnr_mean, ssim_mean) = test(epoch, logger)
         scheduler.step()
@@ -108,7 +112,7 @@ def main():
             if psnr_mean > 28:
                 name = result_path + '/' + 'Test_{}_{:.2f}_{:.3f}'.format(epoch, psnr_max, ssim_mean) + '.mat'
                 scio.savemat(name, {'truth': truth, 'pred': pred, 'psnr_list': psnr_all, 'ssim_list': ssim_all})
-                checkpoint(model, epoch, model_path, logger)
+                checkpoint(model, epoch, optimizer, scheduler, model_path, logger)
 
 
 if __name__ == '__main__':
