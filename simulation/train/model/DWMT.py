@@ -559,11 +559,10 @@ class DWMT(nn.Module):
         """
         # Fution physical mask and shifted measurement
         x = self.fution(torch.cat([x, mask], dim=1))
+
         # Coarse feature extraction
         fea, fea_second_branch = self.fe(x)
 
-        # The input of the second branch
-        fea2 = fea
         # This will be added to the final residual
         fea_final = fea
 
@@ -579,9 +578,9 @@ class DWMT(nn.Module):
         # Second branch of encoder
         fea_encoder_2 = []
         for (Blcok, FeaDownSample) in self.encoder_layers_2:
-            fea2 = Blcok(fea_second_branch)
-            fea_encoder_2.append(fea2)
-            fea2 = FeaDownSample(fea2)
+            fea_second_branch = Blcok(fea_second_branch)
+            fea_encoder_2.append(fea_second_branch)
+            fea_second_branch = FeaDownSample(fea_second_branch)
 
         fea_encoder = []
         for j in range(i):
@@ -596,7 +595,7 @@ class DWMT(nn.Module):
                 fea_encoder.append(fea_res)
 
         # Fusion the outputs of the two branches
-        fea = self.CAFM(fea, fea2)
+        fea = self.CAFM(fea, fea_second_branch)
 
         # Bottleneck
         fea = self.bottleneck(fea)
