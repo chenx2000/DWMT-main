@@ -99,7 +99,15 @@ def main():
         "Learning rate:{}, batch_size:{}., method:{}, gpu_id:{}\n".format(opt.learning_rate, opt.batch_size, opt.method,
                                                                           opt.gpu_id))
     psnr_max = 0
-    for epoch in range(1, opt.max_epoch + 1):
+
+    # Load pretrained model
+    if opt.pretrained_model_path == None:
+        start_epoch = 1
+    else:
+        start_epoch = load_checkpoint(opt.pretrained_model_path, model, optimizer, scheduler)
+        start_epoch += 1
+
+    for epoch in range(start_epoch, opt.max_epoch + 1):
         train(epoch, logger)
         (pred, truth, psnr_all, ssim_all, psnr_mean, ssim_mean) = test(epoch, logger)
         scheduler.step()

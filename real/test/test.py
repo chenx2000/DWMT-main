@@ -12,7 +12,7 @@ import numpy as np
 from torch.autograd import Variable
 import torch.nn.functional as F
 
-parser = argparse.ArgumentParser(description="PyTorch HSIFUSION")
+parser = argparse.ArgumentParser(description="Dual-Window Multiscale Transformer")
 parser.add_argument('--data_path', default='../../datasets/TSA_real_data/Measurements/', type=str, help='path of data')
 parser.add_argument('--mask_path', default='./Data/mask.mat', type=str, help='path of mask')
 parser.add_argument("--size", default=660, type=int, help='the size of trainset image')

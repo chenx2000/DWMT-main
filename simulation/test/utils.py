@@ -147,6 +147,17 @@ def init_meas(gt, mask, input_setting):
     return input_meas
 
 
+def load_checkpoint(filepath, model, optimizer=None, scheduler=None):
+    checkpoint = torch.load(filepath)
+    model.load_state_dict(checkpoint['model_state_dict'])
+    if optimizer:
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    if scheduler:
+        scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+    epoch = checkpoint['epoch']
+    return epoch
+
+
 def my_summary(test_model, H=256, W=256, C=28, N=1):
     model = test_model.cuda()
     print(model)

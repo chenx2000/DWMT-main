@@ -38,6 +38,7 @@ def test(model):
 
 def main():
     model = model_generator(opt.method, opt.pretrained_model_path).cuda()
+    load_checkpoint(opt.pretrained_model_path, model)
     pred, truth = test(model)
     name = opt.outf + 'Test_result.mat'
     print(f'Save reconstructed HSIs as {name}.')
